@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
+  
+  <context-param> <!-- context 파라미터 : 정보저장 / 모든 서블릿이 사용 가능 -->
+        <param-name>userid</param-name> <!-- key값 -->
+        <param-value>asdf</param-value> <!-- value값 -->
+  </context-param>
+  <context-param> <!-- context 파라미터 : 정보저장 -->
+        <param-name>passwd</param-name> <!-- key값 -->
+        <param-value>1234</param-value> <!-- value값 -->
+  </context-param>
+  
+  <servlet> <!-- Servers의 web.xml 110 line 복사 -->
+        <servlet-name>TestServlet</servlet-name> <!-- 서블릿 네임으로 서로 연결 -->
+        <servlet-class>com.servlet.TestServlet</servlet-class> <!-- 서블릿패키지명.서블릿명 -->
+        <init-param> <!-- 초기화 파라미터 : 정보저장 -->
+            <param-name>dir_path</param-name> <!-- key값 -->
+            <param-value>c:\\temp</param-value> <!-- value값 -->
+        </init-param>
+        <init-param>
+            <param-name>email</param-name>
+            <param-value>aaa@google.com</param-value>
+        </init-param>
+   </servlet>
+   
+   <servlet> <!-- 서블릿 태그를 추가할 땐, 서블릿 태그 밑에 추가(서블릿-맵핑 서블릿-맵핑 순서가 아님) -->
+        <servlet-name>ExamServlet</servlet-name> <!-- 서블릿 네임으로 서로 연결 -->
+        <servlet-class>com.servlet.ExamServlet</servlet-class> <!-- 서블릿패키지명.서블릿명 -->
+   </servlet>
+    
+   <servlet-mapping> <!-- Servers의 web.xml 433 line 복사 -->
+        <servlet-name>TestServlet</servlet-name> <!-- 서블릿 네임으로 서로 연결 -->
+        <url-pattern>/test</url-pattern> <!-- 서블릿 맵핑 -->
+   </servlet-mapping>
+   
+   <servlet-mapping> <!-- Servers의 web.xml 433 line 복사 -->
+        <servlet-name>ExamServlet</servlet-name> <!-- 서블릿 네임으로 서로 연결 -->
+        <url-pattern>/exam</url-pattern> <!-- 서블릿 맵핑 -->
+   </servlet-mapping>
+    
+</web-app>
