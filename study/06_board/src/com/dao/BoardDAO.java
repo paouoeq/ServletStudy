@@ -13,4 +13,10 @@ public class BoardDAO {
 		List<BoardDTO> list = session.selectList("BoardMapper.list");
 		return list;
 	}
+	
+	// 글저장
+	public int write(SqlSession session, BoardDTO dto) {
+		int n = session.insert("BoardMapper.write", dto);
+		return n;
+	}
 }
