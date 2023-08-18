@@ -3,14 +3,13 @@ package com.service;
 import java.util.HashMap;
 import java.util.List;
 
-import org.apache.ibatis.session.SqlSession;
-
 import com.dto.BoardDTO;
+import com.dto.PageDTO;
 
 public interface BoardService {
 	
 	//전체 목록
-	public List<BoardDTO> list(HashMap<String, String> map);
+	public PageDTO list(HashMap<String, String> map, int curPage);
 	//글 저장
 	public int write(BoardDTO dto);
 	//글 자세히보기 + 조회수 증가
