@@ -16,4 +16,6 @@ public interface BoardService {
 	public BoardDTO retrieve(int num);
 	//글 수정
 	public int update(BoardDTO dto);
+	//글 삭제
+	public int delete(int num);
 }
