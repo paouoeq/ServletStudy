@@ -12,4 +12,6 @@ public interface BoardService {
 	public List<BoardDTO> list();
 	//글 저장
 	public int write(BoardDTO dto);
+	//글 자세히보기
+	public BoardDTO retrieve(int num);
 }

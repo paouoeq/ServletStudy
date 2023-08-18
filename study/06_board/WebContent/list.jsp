@@ -29,7 +29,7 @@
 %>
 	<tr>
 		<td><%= num %></td>
-		<td><%= title %></td>
+		<td><a href="retrieve?num=<%= num %>"><%= title %></a></td>
 		<td><%= author %></td>
 		<td><%= writeday %></td>
 		<td><%= dto.getReadcnt() %></td>
