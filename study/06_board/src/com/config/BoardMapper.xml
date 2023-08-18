@@ -5,26 +5,34 @@
   
 <mapper namespace="BoardMapper">
 
-	<select id="list" resultType="BoardDTO">
-		select num, title, author, content, writeday, readcnt
-		from board
-		order by num desc
-	</select>
-	
-	<insert id="write" parameterType="BoardDTO">
-		insert into board (num, title, author, content)
-		values (board_seq.nextval, #{title}, #{author}, #{content})
-	</insert>
-
-	<select id="retrieve" parameterType="int" resultType="BoardDTO">
-		select num, title, author, content, writeday, readcnt
-		from board
-		where num = #{num}
-	</select>
-	
-	<update id="readcnt" parameterType="int">
-		update board
-		set readcnt = readcnt + 1
-		where num = #{num}
-	</update>
+ 	<select id="list" resultType="BoardDTO">
+ 	  select num, title, author, content, writeday, readcnt
+ 	  from board
+ 	  order by num desc
+ 	</select>
+ 
+    <insert id="write" parameterType="BoardDTO">
+      insert into board (num, title, author, content)
+      values ( board_seq.nextval, #{title}, #{author}, #{content} )
+    </insert>
+    
+    <select id="retrieve" parameterType="int" 
+              resultType="BoardDTO">
+       select num, title, author, content, writeday, readcnt
+ 	   from board
+       where num = #{num}
+    </select>
+    
+    <update id="readcnt" parameterType="int">
+       update board
+       set readcnt = readcnt + 1
+       where num = #{num}
+    </update>
+    
+    <update id="update" parameterType="BoardDTO">
+       update board
+       set title=#{title}, author=#{author}, content=#{content}
+       where num = #{num}
+    </update>
+    
 </mapper>

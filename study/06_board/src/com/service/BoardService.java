@@ -14,4 +14,6 @@ public interface BoardService {
 	public int write(BoardDTO dto);
 	//글 자세히보기 + 조회수 증가
 	public BoardDTO retrieve(int num);
+	//글 수정
+	public int update(BoardDTO dto);
 }
