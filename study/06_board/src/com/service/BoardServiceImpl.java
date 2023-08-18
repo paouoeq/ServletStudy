@@ -46,7 +46,14 @@ public class BoardServiceImpl implements BoardService {
 		SqlSession session = MySqlSessionFactory.getSession();
 		
 		try {
+			// DAO 연동
 			BoardDAO dao = new BoardDAO();
+			
+			// 조회수 증가
+			int n = dao.readcnt(session, num);
+			session.commit();
+			
+			// 자세히 보기
 			dto = dao.retrieve(session, num);
 		} finally {
 			session.close();

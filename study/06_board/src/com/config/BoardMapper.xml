@@ -22,4 +22,9 @@
 		where num = #{num}
 	</select>
 	
+	<update id="readcnt" parameterType="int">
+		update board
+		set readcnt = readcnt + 1
+		where num = #{num}
+	</update>
 </mapper>
