@@ -22,7 +22,6 @@
 		});
 		
 	});
-	
 </script>
 
 </head>
@@ -90,6 +89,10 @@
 		if(totalCount%perPage != 0) { // 딱 나누어 떨어지지 않으면 1 증가
 			totalNum++;
 		}
+		
+		// 검색용
+		String searchName = pageDTO.getSearchName();
+		String searchValue = pageDTO.getSearchValue();
 	%>
 	<tr>
 		<td colspan="6">
@@ -102,7 +105,7 @@
 					} // end if
 			 		else { 
 					%>
-					<a href="list?curPage=<%= i %>"><%= i %></a>
+					<a href="list?curPage=<%= i %>&searchName=<%= searchName %>&searchValue=<%= searchValue %>"><%= i %></a>
 					<% 
 					} // end else
 					%>

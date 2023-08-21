@@ -10,6 +10,10 @@ public class PageDTO {
 	int totalCount; // 전체 레코드 개수
 	int curPage; // 현재 페이지 번호
 	
+	// 검색을 위해 searchName, searchValue 저장
+	String searchName;
+	String searchValue;
+	
 	// getter/setter
 	public List<BoardDTO> getList() {
 		return list;
@@ -34,6 +38,18 @@ public class PageDTO {
 	}
 	public void setCurPage(int curPage) {
 		this.curPage = curPage;
+	}
+	public String getSearchName() {
+		return searchName;
+	}
+	public void setSearchName(String searchName) {
+		this.searchName = searchName;
+	}
+	public String getSearchValue() {
+		return searchValue;
+	}
+	public void setSearchValue(String searchValue) {
+		this.searchValue = searchValue;
 	}
 	
 	

@@ -20,6 +20,7 @@ public class BoardListServlet extends HttpServlet {
 		// list.jsp에서 1,2,3,4 페이지 번호를 클릭할 때 전달된 현재 페이지 번호 얻기
 		// <a herf="list?curPage=2">2</a> 와같이 쿼리스트링으로 현재 페이지 번호 받음
 		String curPage = request.getParameter("curPage"); // DAO까지 넘겨줘야 함
+		
 		if(curPage == null) { // 맨 처음 실행한 경우
 			curPage = "1";
 		}

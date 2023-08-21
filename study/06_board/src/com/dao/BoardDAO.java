@@ -43,6 +43,9 @@ public class BoardDAO {
 		
 		/* searchName과 searchValue를 PageDTO에 저장해야 함 -> 그래야 검색했을 때 페이징이 적용된다.
 			searchName과 searchValue 유지를 시켜야 다른 페이지로 이동해도 검색조건이 유지가 된다.*/
+		pageDTO.setSearchName(map.get("searchName"));
+		pageDTO.setSearchValue(map.get("searchValue"));
+		
 		
 		return pageDTO;
 	}
