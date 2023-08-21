@@ -1,8 +1,9 @@
 <%@page import="com.dto.PageDTO"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
 <%@page import="java.util.List"%>
 <%@page import="com.dto.BoardDTO"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,12 +28,10 @@
 </head>
 <body>
 <h2>게시판 목록보기</h2>
-<%
-	PageDTO pageDTO = (PageDTO)request.getAttribute("PageDTO");
+<!-- JSTL 적용 : 변수 -->
+<c:set var="pageDTO" value="${PageDTO}"/>
+<c:set var="list" value="${pageDTO.list}"/>
 
-	// pageDTO에 저장된 4개의 데이터 중 리스트만 얻고 출력하기
-	List<BoardDTO> list = pageDTO.getList();
-%>
 <table border=1>
 
 	<!-- 검색화면 -->
@@ -58,66 +57,45 @@
 		<th>조회수</th>
 		<th>삭제</th>
 	</tr>
-<% 
-	for(BoardDTO dto : list) {
-		int num = dto.getNum();
-		String title = dto.getTitle();
-		String author = dto.getAuthor();
-		String writeday = dto.getWriteday();
-%>
-	<tr>
-		<td><%= num %></td>
-		<td><a href="retrieve?num=<%= num %>"><%= title %></a></td>
-		<td><%= author %></td>
-		<td><%= writeday %></td>
-		<td><%= dto.getReadcnt() %></td>
-		<td><button data-num="<%= num %>">삭제</button></td>
-	</tr>
-<% 
-	}
-%>
+	<!-- JSTL 적용 : list 반복문 -->
+	<c:forEach var="dto" items="${list}">
+		<tr>
+			<td>${dto.num}</td>
+			<td><a href="retrieve?num=${dto.num}">${dto.title}</a></td>
+			<td>${dto.author}</td>
+			<td>${dto.writeday}</td>
+			<td>${dto.readcnt}</td>
+			<td><button data-num="${dto.num}">삭제</button></td>
+		</tr>
+	</c:forEach>
 
 	<!-- page 번호 출력 -->
-	<%
-		// 4가지 정보 중 3가지 사용함(list 제외 모두)
-		int perPage = pageDTO.getPerPage();
-		int curPage = pageDTO.getCurPage();
-		int totalCount = pageDTO.getTotalCount();
-		
-		// page 숫자 만들기
-		int totalNum = totalCount / perPage;
-		if(totalCount%perPage != 0) { // 딱 나누어 떨어지지 않으면 1 증가
-			totalNum++;
-		}
-		
-		// 검색용
-		String searchName = pageDTO.getSearchName();
-		String searchValue = pageDTO.getSearchValue();
-	%>
+	<!-- JSTL 적용 -->
+	<c:set var="perPage" value="${pageDTO.perPage}"/>
+	<c:set var="curPage" value="${pageDTO.curPage}"/>
+	<c:set var="totalCount" value="${pageDTO.totalCount}"/>
+	<c:set var="totalNum" value="${totalCount / perPage}" />
+	
+	<c:if test="${totalCount % perPage != 0}">
+		<c:set var="totalNum" value="${totalNum+1}" />
+	</c:if>
+	
+	<c:set var="searchName" value="${pageDTO.searchName}" />
+	<c:set var="searchValue" value="${pageDTO.searchValue}" />
+	
 	<tr>
 		<td colspan="6">
-			<% 
-				for(int i=1; i<=totalNum; i++) {
-			 		if(curPage == i) {
-			%>
-					<%= i %>
-					<% 
-					} // end if
-			 		else { 
-					%>
-					<a href="list?curPage=<%= i %>&searchName=<%= searchName %>&searchValue=<%= searchValue %>"><%= i %></a>
-					<% 
-					} // end else
-					%>
-			<%
-				} // end for
-			%>
+			<c:forEach var="i" begin="1" end="${totalNum}">
+				<c:if test="${curPage == i}">
+					${i}
+				</c:if>
+				<c:if test="${curPage != i}">
+					<a href=" <c:url value='list?curPage=${i}&searchName=${searchName}&searchValue=${searchValue}'/> "> ${i} </a>
+				</c:if>
+			</c:forEach>
 		</td>
 	</tr>
-	<!-- page 번호 출력 -->
-	
 </table>
 <a href="writeui">글쓰기</a>
-
 </body>
 </html>

@@ -3,6 +3,12 @@ package com.dto;
 public class BoardDTO {
 	
 	public BoardDTO() { }
+	int num; // 글번호
+	String title; // 제목
+	String author; // 작성자
+	String content; // 내용
+	String writeday; // 작성일
+	int readcnt; // 조회수
 	
 	public BoardDTO(int num, String title, String author, String content, String writeday, int readcnt) {
 		this.num = num;
@@ -49,12 +55,6 @@ public class BoardDTO {
 	public void setReadcnt(int readcnt) {
 		this.readcnt = readcnt;
 	}
-	int num; // 글번호
-	String title; // 제목
-	String author; // 작성자
-	String content; // 내용
-	String writeday; // 작성일
-	int readcnt; // 조회수
 	
 	@Override
 	public String toString() {
