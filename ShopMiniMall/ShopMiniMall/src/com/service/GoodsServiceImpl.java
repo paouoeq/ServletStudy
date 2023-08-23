@@ -24,4 +24,18 @@ public class GoodsServiceImpl implements GoodsService {
 		return list;
 	}
 
+	@Override
+	public GoodsDTO goodsRetrieve(String gCode) {
+		GoodsDTO dto = null;
+		SqlSession session = MySqlSessionFactory.getSession();
+		
+		try {
+			GoodsDAO dao = new GoodsDAO();
+			dto = dao.goodsRetrieve(session, gCode);
+		}finally {
+			session.close();
+		}
+		return dto;
+	}
+
 }

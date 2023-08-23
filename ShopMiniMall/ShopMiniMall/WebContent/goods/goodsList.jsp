@@ -29,7 +29,7 @@
 		<table style='padding:15px'>
 			<tr>
 				<td>
-					<a href="GoodsRetrieveServlet?gCode=D1"> 
+					<a href="GoodsRetrieveServlet?gCode=${ dto.gCode }"> 
 						<img src="images/items/${ dto.gImage }.gif" border="0" align="center" width="200">
 					</a>
 				</td>
@@ -40,7 +40,7 @@
 			</tr>
 			<tr>
 				<td class= "td_default" align ="center">
-					<a class= "a_black" href="GoodsRetrieveServlet?gCode=D1"> 
+					<a class= "a_black" href="GoodsRetrieveServlet?gCode=${ dto.gCode }"> 
 					${ dto.gName }<br>
 					</a>
 					<font color="gray">

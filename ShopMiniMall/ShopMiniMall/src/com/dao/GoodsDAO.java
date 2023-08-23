@@ -12,4 +12,10 @@ public class GoodsDAO {
 		List<GoodsDTO> list = session.selectList("GoodsMapper.goodsList", gCategory);
 		return list;
 	}
+	
+	// 상품 자세히 보기
+	public GoodsDTO goodsRetrieve(SqlSession session, String gCode) {
+		GoodsDTO dto = session.selectOne("GoodsMapper.goodsRetrieve", gCode);
+		return dto;
+	}
 }
