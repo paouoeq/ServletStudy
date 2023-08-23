@@ -8,13 +8,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
-@WebServlet("/main")
-public class MainServlet extends HttpServlet {
+@WebServlet("/LoginUIServlet")
+public class LoginUIServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		//포워드
-		request.getRequestDispatcher("main.jsp").forward(request, response);
+		request.getRequestDispatcher("loginForm.jsp").forward(request, response);
 	}
 
 }
