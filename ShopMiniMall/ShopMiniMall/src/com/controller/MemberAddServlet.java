@@ -1,6 +1,7 @@
 package com.controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,12 +12,10 @@ import com.dto.MemberDTO;
 import com.service.MemberService;
 import com.service.MemberServiceImpl;
 
-
 @WebServlet("/MemberAddServlet")
 public class MemberAddServlet extends HttpServlet {
-
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+			
 		String userid = request.getParameter("userid");
 		String passwd = request.getParameter("passwd");
 		String username = request.getParameter("username");
@@ -29,18 +28,17 @@ public class MemberAddServlet extends HttpServlet {
 		String email1 = request.getParameter("email1");
 		String email2 = request.getParameter("email2");
 		
-		MemberDTO dto = new MemberDTO(userid, passwd, username, post, addr1, addr2, 
-				phone1, phone2, phone3, email1, email2);
+		MemberDTO dto = new MemberDTO(userid, passwd, username, post, addr1, addr2, phone1, phone2, phone3, email1, email2);
 		
-		// dto를 서비스 거쳐서 dao까지 전달
+		// dto를 서비스 거쳐 dao까지 전달
 		MemberService service = new MemberServiceImpl();
 		int n = service.memberAdd(dto);
 		
-		// 요청위임 ( 로그인 화면 보기 )
+		// 요청위임 => 회원가입 끝나면 보여줄 화면
 		response.sendRedirect("LoginUIServlet");
 	}
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-	   doGet(request, response);
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request, response);
 	}
+
 }

@@ -1,82 +1,87 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script> 
+<!-- jquery CDM -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+<!-- jquery -->
 <script>
-   $(document).ready(function(){
-	   // 비번일치 여부 확인
-	   $("#passwd2").on("keyup", function(){
-		    var passwd = $("#passwd").val();
-		    var passwd2 = $("#passwd2").val();
-		    var mesg = "비번 일치";
-		    if(passwd != passwd2){
-		    	mesg="비번 불일치"
-		    }
-		    
-		    $("#idcheck").text(mesg);
-	   });
-	   
-	   // id 중복체크
-	   $("#idDupulicatedcheck").on("click",function(){
-		   // submit 비활성
-		   event.preventDefault();
-		   // ajax 연동
-		   $.ajax({
-               type:"get",
-               url:"MemberIdCheckServlet",
-               data:{
-            	   userid:$("#userid").val()
-               },  // 요청코드
-               dataType:'text',  //  응답받은 데이터 타입
-               success:function(data, status, xhr){
-                 console.log(data);
-                 $("#result").text(data);
-               },
-               error:function(xhr, status, error){
-                    console.log("erro 발생");
-               }
+	$(document).ready(function(){
+		$("#passwd2").on("keyup", function(){
+			var passwd = $("#passwd").val(); // input tage이기 때문에 val로 값 가져옴
+			var passwd2 = $("#passwd2").val();
+			var mesg = "비번 일치";
+			if(passwd != passwd2) {
+				mesg="비번 불일치";
+			}
+			
+			$("#idcheck").text(mesg); // spane태그에 값을 넣어줌
+		});
+		
+		// id 중복체크
+		$("#idDupulicatedcheck").on("click", function(){
+			// button은 기본적으로 form태그 안에서 submit처럼 동작함 => submit 비활성화 필요
+			event.preventDefault() // submit 비활성화
+			//ajax 연동
+			$.ajax({
+                // 요청코드
+                type:"get", // MemberIdCheckServlet으로 doget방식으로 url넘겨줌
+                url:"MemberIdCheckServlet", // 버튼 눌렀을 때 이동할 곳 정하기
+                data:{
+                    userid:$("#userid").val() // MemberIdCheckServlet으로 넘겨줄 값 : userid값
+                },
+
+                // 응답코드
+                dataType:'text', // 응답받을 데이터 타입
+                success:function(data, satatus, xhr) { // 성공했을 때 data변수에 MemberIdCheckServlet에서 넘어온 값(mesg) 저장
+                    console.log(data);
+                    $("#result").text(data); // id값이 result인 span태그에 값 넣어줌 -> 사용자에게 출력됨
+                },
+                error:function(xhr, status, error) {
+                    console.log("에러발생");
+                }
             });
-	   });
-	   
-	   // 모든 회원정보가 입력된후  submit 되도록 체크하기
-	   
-	   
-   });
-</script>   
+		});
+		
+		
+		// 모든 회원정보가 입력된 후 submit 되도록 만들기
+		
+		
+	});
+
+
+</script>
 <form action="MemberAddServlet" method="post">
 *아이디:<input type="text" name="userid" id="userid">
 <button id="idDupulicatedcheck">중복확인</button><span id="result"></span><br>
 *비밀번호:<input type="text" name="passwd" id="passwd"><br>
-비밀번호확인:<input type="text" name="passwd2" id="passwd2"><span id="idcheck"></span><br>
-이름:<input type="text" name="username"><br>
-<!-- kakao address API -->
+*비밀번호확인:<input type="text" name="passwd2" id="passwd2"><span id="idcheck"></span><br>
+*이름:<input type="text" name="username"><br>
+
+<!-- kakao address API --> <!-- 제공된 API에는 name속성이 없으니 추가해줌 -->
 <input type="text" name="post" id="sample4_postcode" placeholder="우편번호">
 <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
 <input type="text" name="addr1" id="sample4_roadAddress" placeholder="도로명주소">
 <input type="text" name="addr2" id="sample4_jibunAddress" placeholder="지번주소">
 <span id="guide" style="color:#999"></span>
-<br>
 <!-- kakao address API -->
+
 전화번호:
 <select name="phone1">
- <option value="010">010</option>
- <option value="011">011</option>
+	<option value="010">010</option>
+	<option value="011">011</option>
 </select>-
 <input type="text" name="phone2">-
 <input type="text" name="phone3"><br>
 이메일:
 <input type="text" name="email1">@<input type="text" name="email2" placeholder="직접입력">
 <select>
- <option value="daum.net">daum.net</option>
- <option value="google.com">google.com</option>
- <option value="naver.com">naver.com</option>
-</select>
-<br>
+	<option value="daum.net">daum.net</option>
+	<option value="google.com">google.com</option>
+	<option value="naver.com">naver.com</option>
+</select><br>
 <input type="submit" value="회원가입">
 <input type="reset" value="취소">
-</form>
 
-
-
+<!-- kakao address API script -->
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script>
     //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
@@ -130,3 +135,6 @@
         }).open();
     }
 </script>
+<!-- kakao address API script -->
+
+</form>

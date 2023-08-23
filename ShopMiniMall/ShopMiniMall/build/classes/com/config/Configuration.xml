@@ -5,7 +5,7 @@
 <configuration>
   <!-- 주석 -->
    
-   <!--  jdbc.properties 등록 -->
+   <!-- jdbc properties 등록 -->
    <properties resource="com/config/jdbc.properties"></properties>
    
    <typeAliases>

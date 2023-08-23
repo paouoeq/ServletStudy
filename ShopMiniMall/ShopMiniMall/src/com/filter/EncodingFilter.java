@@ -9,21 +9,16 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 
-
 public class EncodingFilter implements Filter {
-
 	public void destroy() {
-		
 	}
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		//POST 한글처리
 		request.setCharacterEncoding("utf-8");
 		chain.doFilter(request, response);
 	}
 
 	public void init(FilterConfig fConfig) throws ServletException {
-		
 	}
 
 }
