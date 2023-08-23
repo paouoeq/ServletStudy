@@ -24,4 +24,10 @@ public class MemberDAO {
 		MemberDTO dto = session.selectOne("MemberMapper.login", map);
 		return dto;
 	}
+	
+	// 마이페이지 - id에 해당하는 유저 정보 반환
+	public MemberDTO mypage(SqlSession session, String userid) {
+		MemberDTO dto = session.selectOne("MemberMapper.mypage", userid);
+		return dto;
+	}
 }

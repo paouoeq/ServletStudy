@@ -2,84 +2,35 @@
     pageEncoding="UTF-8"%>
 <!-- jquery CDM -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
-<!-- jquery -->
-<script>
-	$(document).ready(function(){
-		$("#passwd2").on("keyup", function(){
-			var passwd = $("#passwd").val(); // input tage이기 때문에 val로 값 가져옴
-			var passwd2 = $("#passwd2").val();
-			var mesg = "비번 일치";
-			if(passwd != passwd2) {
-				mesg="비번 불일치";
-			}
-			
-			$("#idcheck").text(mesg); // spane태그에 값을 넣어줌
-		});
-		
-		// id 중복체크
-		$("#idDupulicatedcheck").on("click", function(){
-			// button은 기본적으로 form태그 안에서 submit처럼 동작함 => submit 비활성화 필요
-			event.preventDefault() // submit 비활성화
-			//ajax 연동
-			$.ajax({
-                // 요청코드
-                type:"get", // MemberIdCheckServlet으로 doget방식으로 url넘겨줌
-                url:"MemberIdCheckServlet", // 버튼 눌렀을 때 이동할 곳 정하기
-                data:{
-                    userid:$("#userid").val() // MemberIdCheckServlet으로 넘겨줄 값 : userid값
-                },
+<!-- JSTL -->
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-                // 응답코드
-                dataType:'text', // 응답받을 데이터 타입
-                success:function(data, satatus, xhr) { // 성공했을 때 data변수에 MemberIdCheckServlet에서 넘어온 값(mesg) 저장
-                    console.log(data);
-                    $("#result").text(data); // id값이 result인 span태그에 값 넣어줌 -> 사용자에게 출력됨
-                },
-                error:function(xhr, status, error) {
-                    console.log("에러발생");
-                }
-            });
-		});
-		
-		
-		// 모든 회원정보가 입력된 후 submit 되도록 만들기
-		
-		
-	});
-
-
-</script>
-<form action="MemberAddServlet" method="post">
-*아이디:<input type="text" name="userid" id="userid">
-<button id="idDupulicatedcheck">중복확인</button><span id="result"></span><br>
-*비밀번호:<input type="text" name="passwd" id="passwd"><br>
-*비밀번호확인:<input type="text" name="passwd2" id="passwd2"><span id="idcheck"></span><br>
-*이름:<input type="text" name="username"><br>
-
+<form action="" method="">
+*아이디:${login.userid}<br><br>
+*이름:${login.username}<br>
 <!-- kakao address API --> <!-- 제공된 API에는 name속성이 없으니 추가해줌 -->
-<input type="text" name="post" id="sample4_postcode" placeholder="우편번호">
+<input type="text" name="post" value="${login.post}" id="sample4_postcode" placeholder="우편번호">
 <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
-<input type="text" name="addr1" id="sample4_roadAddress" placeholder="도로명주소">
-<input type="text" name="addr2" id="sample4_jibunAddress" placeholder="지번주소">
+<input type="text" name="addr1" value="${login.addr1}" id="sample4_roadAddress" placeholder="도로명주소">
+<input type="text" name="addr2" value="${login.addr2}" id="sample4_jibunAddress" placeholder="지번주소">
 <span id="guide" style="color:#999"></span>
 <br>
 <!-- kakao address API -->
-
-전화번호:
+전화번호: <!-- 속성에 c:if를 적용하여 selected될 요소를 나눔 -->
 <select name="phone1">
-	<option value="010">010</option>
-	<option value="011">011</option>
+	<option value="010" <c:if test="${login.phone1=='010'}">selected</c:if> >010</option>
+	<option value="011" <c:if test="${login.phone1=='011'}">selected</c:if> >011</option>
 </select>-
-<input type="text" name="phone2">-
-<input type="text" name="phone3"><br>
+<input type="text" name="phone2" value="${login.phone2}">-
+<input type="text" name="phone3" value="${login.phone3}" ><br>
 이메일:
-<input type="text" name="email1">@<input type="text" name="email2" placeholder="직접입력">
+<input type="text" name="email1" value="${login.email1}">@<input type="text" name="email2" value="${login.email2}" placehoder="직접입력">
 <select>
 	<option value="daum.net">daum.net</option>
 	<option value="google.com">google.com</option>
 	<option value="naver.com">naver.com</option>
 </select><br>
-<input type="submit" value="회원가입">
+<input type="submit" value="수정">
 <input type="reset" value="취소">
 
 <!-- kakao address API script -->
