@@ -25,4 +25,10 @@
 		set gAmount = #{gAmount}
 		where num = #{num}
 	</update>
+	
+	<!-- 장바구니 단일 삭제 -->
+	<delete id="cartDelete" parameterType="int">
+		delete from cart
+		where num = #{num}
+	</delete>
 </mapper>

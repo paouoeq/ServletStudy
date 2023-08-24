@@ -12,7 +12,7 @@
 			var num = $(this).attr("data-num"); // attr : 속성값을 가져옴
 			var gAmount = $("#gAmount"+num).val();
 			
-			//ajax 연동
+			//ajax 연동 - 수정버튼
 			$.ajax({
                 // 요청코드
                 type:"get", // CartUpdateServlet으로 doget방식으로 url넘겨줌
@@ -26,16 +26,27 @@
                 dataType:'text', // 응답받을 데이터 타입
                 success:function(data, satatus, xhr) { 
                 	// 성공했을 때 합계를 수정해줘야함(수량이 변경되었기 때문)
-                	var price = $("#gPrice"+num).text();
-                	alert(price);
+                	var price = $("#gPrice"+num).text(); // price값 가져오는 방법1
+//                	var price2 = $("#sum"+num).attr("data-price"); // // price값 가져오는 방법2
+                	
                     $("#sum"+num).text(Number.parsInt(price)*Number.parsInt(gAmount));
                 },
                 error:function(xhr, status, error) {
                     console.log("에러발생");
                 }
-            });
+            }); 
+		});// end updateBtn
+		
+		// 단일 삭제 버튼 이벤트
+		$(".deleteBtn").on("click", function(){
+			var num = $(this).attr("data-num"); // attr : 속성값을 가져옴
+			//alert(num); // num값 확인
+			location.href="CartDeleteServlet?num="+num; // 쿼리스트링으로 num값 넘겨줌
+			
 		});
-	});
+		
+	}); 
+	
 </script>
 
 
@@ -134,13 +145,18 @@
 			<!-- 클래스를 구별하기 위해 커스텀 속성 추가 => num값으로 구별 -->
 			<td><input type="button" value="수정" class="updateBtn" data-num="${dto.num}"/></td> 
 			
-			<td class="td_default" align="center" width="80"
-				style='padding-left: 5px'><span id="sum${dto.num}" data-price="${dto.gPrice}"> <!-- sum 아이디 구별을 위해 num값 이용 -->
+			<td class="td_default" align="center" width="80" style='padding-left: 5px'>
+				<span id="sum${dto.num}" data-price="${dto.gPrice}"> <!-- sum 아이디 구별을 위해 num값 이용 -->
 				￦${dto.gPrice * dto.gAmount} <!-- price값 얻는 방법2 : 커스텀속성을 통해 price값 얻기 -->
-				</span></td>
-			<td><input type="button" value="주문"></td>
+				</span>
+			</td>
+			<td>
+				<input type="button" value="주문">
+			</td>
 			<td class="td_default" align="center" width="30"
-				style='padding-left: 10px'><input type="button" value="삭제"></td>
+				style='padding-left: 10px'>
+				<!-- 수정과 마찬가지로 id로는 중복이 생겨 class로 처리, 커스텀속성으로 num값 얻기 -->
+				<input type="button" value="삭제" class="deleteBtn" data-num="${dto.num}"></td>
 			<td height="10"></td>
 		</tr>
 
