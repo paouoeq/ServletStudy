@@ -3,6 +3,46 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+
+<!-- Ajax 통해 수정버튼 활성화 -->
+<script>
+	$(document).ready(function(){
+		$(".updateBtn").on("click", function(){
+			var num = $(this).attr("data-num"); // attr : 속성값을 가져옴
+			var gAmount = $("#gAmount"+num).val();
+			
+			//ajax 연동
+			$.ajax({
+                // 요청코드
+                type:"get", // CartUpdateServlet으로 doget방식으로 url넘겨줌
+                url:"CartUpdateServlet", // 버튼 눌렀을 때 이동할 곳 정하기
+                data:{ // CartUpdateServlet 으로 넘겨줄 값
+                	num:num,
+                    gAmount:gAmount
+                },
+
+                // 응답코드
+                dataType:'text', // 응답받을 데이터 타입
+                success:function(data, satatus, xhr) { 
+                	// 성공했을 때 합계를 수정해줘야함(수량이 변경되었기 때문)
+                	var price = $("#gPrice"+num).text();
+                	alert(price);
+                    $("#sum"+num).text(Number.parsInt(price)*Number.parsInt(gAmount));
+                },
+                error:function(xhr, status, error) {
+                    console.log("에러발생");
+                }
+            });
+		});
+	});
+</script>
+
+
+
+
+
+
 <!-- JSTL 적용 -->
 <table width="90%" cellspacing="0" cellpadding="0" border="0">
 
@@ -57,7 +97,7 @@
 
 	<form name="myForm">
 <!-- 반복문 시작 -->
-		<c:forEach var="dto" items="${ cartList }">
+		<c:forEach var="dto" items="${ cartList }" varStatus="status">
 
 		 <input type="text" name="num81" value="81" id="num81">
 		 <input type="text" name="gImage81" value="bottom1" id="gImage81">
@@ -79,17 +119,24 @@
 				<br> <font size="2" color="#665b5f">[옵션 : 사이즈(${dto.gSize})
 					, 색상(${dto.gColor})]
 			</font></td>
-			<td class="td_default" align="center" width="110">
-			￦${dto.gPrice}
+			<td class="td_default" align="center" width="110" >
+			<!-- price값 얻는 방법1 : span태그 추가해 price값 얻기 -->
+			<span id="gPrice${dto.num}">￦${dto.gPrice}</span> <!-- price값을 가져오기 위해 span태그 추가 -->
+			
 			</td>
 			<td class="td_default" align="center" width="90">
 			<input class="input_default" type="text" name="gAmount"
-				id="gAmount" style="text-align: right" maxlength="3"
-				size="2" value="${dto.gAmount}"></input></td>
-			<td><input type="button" value="수정"/></td>
+				id="gAmount${dto.num}" style="text-align: right" maxlength="3"
+				size="2" value="${dto.gAmount}"></input></td> <!-- gAmount id를 구별하기 위해 num 추가 -->
+				
+				
+			<!-- 반복문 => 수정 버튼의 아이디가 모두 같음 => 따라서 아이디 대신 클래스 사용 -->
+			<!-- 클래스를 구별하기 위해 커스텀 속성 추가 => num값으로 구별 -->
+			<td><input type="button" value="수정" class="updateBtn" data-num="${dto.num}"/></td> 
+			
 			<td class="td_default" align="center" width="80"
-				style='padding-left: 5px'><span id="sum81">
-				￦${dto.gPrice * dto.gAmount}
+				style='padding-left: 5px'><span id="sum${dto.num}" data-price="${dto.gPrice}"> <!-- sum 아이디 구별을 위해 num값 이용 -->
+				￦${dto.gPrice * dto.gAmount} <!-- price값 얻는 방법2 : 커스텀속성을 통해 price값 얻기 -->
 				</span></td>
 			<td><input type="button" value="주문"></td>
 			<td class="td_default" align="center" width="30"
