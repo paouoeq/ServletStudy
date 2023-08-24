@@ -1,5 +1,38 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+<script>
+	$(document).ready(function(){
+		// 체크 -> 배송 정보에 고객 정보 복사
+		$("#same_address").on("click", function(){
+			var check = this.checked; // check 상태 저장
+			if(check == true) {
+				var mname = $("#mname").val()
+				var mpost = $("#mpost").val()
+				var maddress1 = $("#maddress1").val()
+				var maddress2 = $("#maddress2").val()
+				var mphone = $("#mphone").val()
+				// 고객정보 값을 배송지 정보에 설정
+				$("#orderName").val(mname);
+				$("#sample4_postcode").val(mpost);
+				$("#sample4_roadAddress").val(maddress1);
+				$("#sample4_jibunAddress").val(maddress2);
+				$("#sample4_jibunAddress").val(maddress2);
+				$("#phone").val(mphone);
+			} else {
+				// 배송지 정보값을 ""로 설정
+				$("#orderName").val("");
+				$("#sample4_postcode").val("");
+				$("#sample4_roadAddress").val("");
+				$("#sample4_jibunAddress").val("");
+				$("#phone").val("");
+			}	
+		});
+		
+	});
+
+</script>
+
 
 <form name="myForm" method="get" action="">
 	<table width="80%" cellspacing="0" cellpadding="0">
@@ -147,7 +180,7 @@
 
 	<tr> 
 		<td class="td_default">
-		  <input type="checkbox" name="same_address"> 배송지가 동일할 경우 선택하세요.
+		  <input type="checkbox" name="same_address" id="same_address"> 배송지가 동일할 경우 선택하세요.
 		</td>
 	</tr>
 	
