@@ -69,6 +69,13 @@
 			f.submit();
 		});
 		
+		// 주문 이벤트
+		$(".orderBtn").on("click", function(){
+			var num = $(this).attr("data-num");
+			location.href="OrderConfirmServlet?num="+num;
+		});
+		
+		
 	}); 
 	
 </script>
@@ -175,7 +182,8 @@
 				</span>
 			</td>
 			<td>
-				<input type="button" value="주문">
+				<!-- 삭제 처리와 비슷 / input type button은 기본적으로 submit 안됨(jquery로 설정하여 submit은 가능)-->
+				<input type="button" value="주문" class="orderBtn" data-num="${dto.num}">
 			</td>
 			<td class="td_default" align="center" width="30"
 				style='padding-left: 10px'>
