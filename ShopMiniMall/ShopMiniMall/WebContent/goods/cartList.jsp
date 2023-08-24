@@ -45,6 +45,30 @@
 			
 		});
 		
+		// 전체선택 이벤트 처리
+		$("#allCheck").on("click", function(){
+			// allCheck의 체크 여부 확인
+//			alert(this.checked);
+			var allCheck = this.checked; // allCheck의 상태 저장
+			
+			// 체크해야될 체크박스 얻기
+//			var chk = $(".check"); // class가 check인 것들 배열로 반환
+			
+			$(".check").each(function(idx, ele){ // check반복
+                this.checked = allCheck; // 각각의 체크박스들을 allcheck와 동일한 상태로 만듦
+            });
+			
+		});
+		
+		// 전체 삭제
+		// form 태그 밖에 있는 버튼을 form태그 안의 submit 버튼처럼 동작
+		$("#deleteAll").on("click", function(){
+			var f = $("form")[0]; // 폼태그로 불러왔을 때 리스트로 가져오기 때문에 인덱스 지정해줌
+			f.action="CartDeleteAllServlet";
+			f.method="get";
+			f.submit();
+		});
+		
 	}); 
 	
 </script>
@@ -83,7 +107,10 @@
 
 	<tr>
 		<td class="td_default" align="center">
+		
+		<!-- 전체선택 체크 -> 체크박스 모두 체크 -->
 		<input type="checkbox" name="allCheck" id="allCheck"> <strong>전체선택</strong></td>
+		
 		<td class="td_default" align="center"><strong>주문번호</strong></td>
 		<td class="td_default" align="center" colspan="2"><strong>상품정보</strong></td>
 		<td class="td_default" align="center"><strong>판매가</strong></td>
@@ -110,18 +137,15 @@
 <!-- 반복문 시작 -->
 		<c:forEach var="dto" items="${ cartList }" varStatus="status">
 
-		 <input type="text" name="num81" value="81" id="num81">
-		 <input type="text" name="gImage81" value="bottom1" id="gImage81">
-		 <input type="text" name="gName81" value="제나 레이스 스커트" id="gName81">
-		  <input type="text" name="gSize81" value="L" id="gSize81">
-		   <input type="text" name="gColor81" value="navy" id="gColor81"> 
-		   <input type="text" name="gPrice81" value="9800" id="gPrice81">
-
 		<tr>
 			<td class="td_default" width="80">
+			
 			<!-- checkbox는 체크된 값만 서블릿으로 넘어간다. 따라서 value에 삭제할 num값을 설정한다. -->
-			<input type="checkbox"
-				name="check" id="check81" class="check" value="81"></td>
+			<!-- 이름은(name) check 하나지만 value는 여러개가 된다.(num값마다 다르니까) -->
+			<!-- url 표시 되는 모습 -> check=(num) -->
+			<input type="checkbox" name="check" class="check" value="${dto.num}">
+			</td>
+			
 			<td class="td_default" width="80">${dto.num}</td>
 			<td class="td_default" width="80"><img
 				src="images/items/${dto.gImage}.gif" border="0" align="center"
@@ -176,7 +200,7 @@
 	<tr>
 		<td align="center" colspan="5"><a class="a_black"
 			href=""> 전체 주문하기 </a>&nbsp;&nbsp;&nbsp;&nbsp; 
-			<a class="a_black" href=""> 전체 삭제하기 </a>&nbsp;&nbsp;&nbsp;&nbsp;
+			<button id="deleteAll"> 전체 삭제하기 </button>&nbsp;&nbsp;&nbsp;&nbsp; <!-- form 밖이어서 submit 안되지만, 체크된 항목의 num값을 넘겨주기 위해 submit 필요 -->
 			<a class="a_black" href=""> 계속 쇼핑하기 </a>&nbsp;&nbsp;&nbsp;&nbsp;
 		</td>
 	</tr>
