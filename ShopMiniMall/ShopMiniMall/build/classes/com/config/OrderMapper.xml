@@ -19,5 +19,20 @@
     	where userid=#{userid}
 	</select>
 	
+	<!-- 단일 결제 정보 저장 -->
+ 	<insert id="orderDone" parameterType="OrderDTO">
+ 	    insert into orderinfo ( num, userid, gCode, gName, gPrice, gSize,
+ 	                       gColor, gAmount, gImage, orderName,
+ 	                       post, addr1, addr2, phone, payMethod )
+ 	    values ( orderinfo_seq.nextval, #{userid}, #{gCode}, #{gName}, #{gPrice}, #{gSize},
+ 	                  #{gColor}, #{gAmount}, #{gImage}, #{orderName},
+ 	                   #{post}, #{addr1}, #{addr2}, #{phone}, #{payMethod})
+ 	</insert>
+	
+	<!-- 결제시 장바구니에서 삭제 -->
+	<delete id="cartDel" parameterType="int">
+		delete from cart
+		where num = #{del_num}
+	</delete>
 	
 </mapper>

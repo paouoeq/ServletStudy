@@ -29,12 +29,35 @@
 			}	
 		});
 		
+		// 결제 버튼 이벤트 처리
+		$("#orderDoneBtn").on("click", function(){
+			
+			var f = $("form")[0];
+			f.action="OrderDoneServlet";
+			f.method="get";
+			f.submit(); // input button이기 때문에 명시적으로 submit 해줘야한다.
+			
+		});
+		
 	});
 
 </script>
 
-
 <form name="myForm" method="get" action="">
+
+	<!-- 결제하기위해 상품 정보들 submit과 함께 넘겨주기 -->
+    <input type="hidden"  name="gCode" value="${cDTO.gCode}" >
+    <input type="hidden"  name="gName" value="${cDTO.gName}" >
+    <input type="hidden"  name="gPrice" value="${cDTO.gPrice}" >
+    <input type="hidden"  name="gSize" value="${cDTO.gSize}" >
+    <input type="hidden"  name="gColor" value="${cDTO.gColor}" >
+    <input type="hidden"  name="gAmount" value="${cDTO.gAmount}" >
+    <input type="hidden"  name="gImage" value="${cDTO.gImage}" >
+    
+    <!-- Cart 테이블에서 삭제할 num도 같이 전달 -->
+    <input type="hidden"  name="num" value="${cDTO.num}" >
+	
+	
 	<table width="80%" cellspacing="0" cellpadding="0">
 
 		<tr>
@@ -220,11 +243,11 @@
 						우편번호
 					</td>
 					<td height="35" class="td_default">
-<!-- 다음주소 시작-->
-<input type="text" id="sample4_postcode" placeholder="우편번호">
+<!-- 다음주소 시작--> <!-- 쿼리스트링으로 넘겨주기 위해 name 추가 -->
+<input type="text" name="post" id="sample4_postcode" placeholder="우편번호">
 <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
-<input type="text" id="sample4_roadAddress" placeholder="도로명주소">
-<input type="text" id="sample4_jibunAddress" placeholder="지번주소">
+<input type="text" name="addr1" id="sample4_roadAddress" placeholder="도로명주소">
+<input type="text" name="addr2" id="sample4_jibunAddress" placeholder="지번주소">
 <span id="guide" style="color:#999"></span>
 
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
@@ -340,7 +363,7 @@
 	<tr>
 		<td class="td_default" align="center">
 			<input type='button' value='취소' onclick="javascript:history.back()">	
-			<input type='button' value='결제하기' onclick="orderDone(myForm)">
+			<input type='button' value='결제하기'" id="orderDoneBtn"> <!-- OderDoneServlet에 주문 정보 보냄 -->
 		</td>
 	</tr>
 
