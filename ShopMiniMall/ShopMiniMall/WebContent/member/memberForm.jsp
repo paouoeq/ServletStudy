@@ -43,7 +43,73 @@
 		
 		
 		// 모든 회원정보가 입력된 후 submit 되도록 만들기
-		
+		$("form").on("submit", function() {
+			var userid = $("#userid").val();
+			var passwd = $("#passwd").val();
+			var passwd2 = $("#passwd2").val();
+			var username = $("#username").val();
+			var sample4_postcode = $("#sample4_postcode").val();
+			var sample4_roadAddress = $("#sample4_roadAddress").val();
+			var sample4_jibunAddress = $("#sample4_jibunAddress").val();
+			var phone2 = $("#phone2").val();
+			var phone3 = $("#phone3").val();
+			var email1 = $("#email1").val();
+			var email2 = $("#email2").val();
+			
+			if(userid.length == 0) {
+				event.preventDefault()
+		        alert("ID는 필수 기입 사항");
+		        $("#userid").focus();
+			}
+			else if(passwd.length == 0) {
+				event.preventDefault()
+		        alert("비밀번호는 필수 기입 사항");
+		        $("#passwd").focus();
+			}
+			else if(passwd2.length == 0) {
+				event.preventDefault()
+		        alert("비밀번호 검사를 해주세요");
+		        $("#passwd2").focus();
+			}
+			else if(username.length == 0) {
+				event.preventDefault()
+		        alert("이름은 필수 기입 사항");
+		        $("#username").focus();
+			}
+			else if(sample4_postcode.length == 0) {
+				event.preventDefault()
+		        alert("주소는 필수 기입 사항");
+			}
+			else if(sample4_roadAddress.length == 0) {
+				event.preventDefault()
+		        alert("주소는 필수 기입 사항")
+			}
+			else if(sample4_jibunAddress.length == 0) {
+				event.preventDefault()
+		        alert("주소는 필수 기입 사항");
+			}
+			else if(phone2.length == 0) {
+				event.preventDefault()
+		        alert("핸드폰 번호는 필수 기입 사항");
+		        $("#phone2").focus();
+			}
+			else if(phone3.length == 0) {
+				event.preventDefault()
+		        alert("핸드폰 번호는 필수 기입 사항");
+		        $("#phone3").focus();
+			}
+			else if(email1.length == 0) {
+				event.preventDefault()
+		        alert("이메일은 필수 기입 사항");
+		        $("#email1").focus();
+			}
+			else if(email2.length == 0) {
+				event.preventDefault()
+		        alert("이메일은 필수 기입 사항");
+		        $("#email2").focus();
+			}
+				
+		});
 		
 	});
 
@@ -54,7 +120,7 @@
 <button id="idDupulicatedcheck">중복확인</button><span id="result"></span><br>
 *비밀번호:<input type="text" name="passwd" id="passwd"><br>
 *비밀번호확인:<input type="text" name="passwd2" id="passwd2"><span id="idcheck"></span><br>
-*이름:<input type="text" name="username"><br>
+*이름:<input type="text" name="username" id="username"><br>
 
 <!-- kakao address API --> <!-- 제공된 API에는 name속성이 없으니 추가해줌 -->
 <input type="text" name="post" id="sample4_postcode" placeholder="우편번호">
@@ -70,10 +136,10 @@
 	<option value="010">010</option>
 	<option value="011">011</option>
 </select>-
-<input type="text" name="phone2">-
-<input type="text" name="phone3"><br>
+<input type="text" name="phone2" id="phone2">-
+<input type="text" name="phone3" id="phone3"><br>
 이메일:
-<input type="text" name="email1">@<input type="text" name="email2" placeholder="직접입력">
+<input type="text" name="email1" id="email1">@<input type="text" name="email2" id="email2" placeholder="직접입력">
 <select>
 	<option value="daum.net">daum.net</option>
 	<option value="google.com">google.com</option>
